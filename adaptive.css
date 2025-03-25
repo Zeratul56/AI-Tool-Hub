@@ -1,0 +1,89 @@
+@media (max-width: 768px) {
+    body{
+        font-size: 14px;
+    }
+
+    h1{
+        font-size: 18px !important;
+    }
+    h2{
+        font-size: 16px !important;
+    }
+
+    .section_row h2{
+        text-align: center;
+    }
+    .row{
+        padding: 10px 0;
+    }
+    .filters{
+        margin: 10px 20px;
+    }
+    .card {
+        width: 330px;
+    }
+    .nav-menu {
+      display: none;
+      flex-direction: column;
+      background-color: white;
+      position: absolute;
+      top: 60px;
+      right: 0;
+      width: 250px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1001;
+    }
+  
+    .nav-menu ul {
+      flex-direction: column;
+      gap: 15px;
+      padding: 20px;
+    }
+  
+    .burger-menu {
+      display: flex;
+    }
+      .reset-button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+    }
+   .filter-group {
+      margin-bottom: 10px;
+    }
+
+    /* .swiper {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .card {
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 300px; /* Максимальная ширина карточки */
+      
+      
+      /* Стили для кнопок навигации 
+      .swiper-button-next,
+      .swiper-button-prev {
+        color: #007BFF;
+      }
+      
+      /* Стили для пагинации 
+      .swiper-pagination-bullet {
+        background-color: #007BFF;
+      } */
+}
+
