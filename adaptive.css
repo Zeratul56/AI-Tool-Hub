@@ -14,6 +14,11 @@
     .section_row h2{
         text-align: center;
     }
+
+    .filters-row-group{
+        gap: 20px;
+    }
+    
     .row{
         padding: 10px 0;
     }
