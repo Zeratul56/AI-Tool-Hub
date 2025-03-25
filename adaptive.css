@@ -1,6 +1,7 @@
 @media (max-width: 768px) {
     body{
         font-size: 14px;
+        overflow-x: hidden;
     }
 
     h1{
@@ -51,39 +52,5 @@
    .filter-group {
       margin-bottom: 10px;
     }
-
-    /* .swiper {
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-      
-      .swiper-slide {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      
-      .card {
-        background-color: white;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 20px;
-        text-align: center;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 300px; /* Максимальная ширина карточки */
-      
-      
-      /* Стили для кнопок навигации 
-      .swiper-button-next,
-      .swiper-button-prev {
-        color: #007BFF;
-      }
-      
-      /* Стили для пагинации 
-      .swiper-pagination-bullet {
-        background-color: #007BFF;
-      } */
 }
 
