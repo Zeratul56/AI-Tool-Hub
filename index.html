@@ -146,6 +146,87 @@
         
         .arrow-head { fill: var(--arrow-win); }
         .arrow-head-lose { fill: var(--arrow-lose); }
+        @media screen and (max-width: 800px) {
+            body {
+                padding: 0;
+            }
+
+            .bracket-wrapper {
+                gap: 8px;
+                padding: 5px 2px;
+            }
+
+            .column {
+                min-width: 100px;
+                gap: 4px;
+            }
+
+            .column-header {
+                font-size: 0.8em;
+                padding: 4px 1px;
+                margin-bottom: 4px;
+            }
+
+            .match-card {
+                padding: 4px;
+                gap: 2px;
+            }
+
+            .team {
+                font-size: 0.6em;
+                padding: 2px 3px;
+            }
+
+            .vs {
+                font-size: 0.4em;
+                margin: 0;
+            }
+
+            .pivot-hint {
+                font-size: 0.4em;
+                margin-top: 2px;
+            }
+
+            .spacer { height: 15px; }
+            .spacer-large { height: 30px; }
+            .spacer-huge { height: 100px; }
+        }
+
+        /* Адаптация под горизонтальный экран */
+        @media screen and (orientation: landscape) and (max-height: 600px) {
+            body {
+                background-color: #0a0a0a;
+            }
+            
+            .bracket-wrapper {
+                gap: 6px;
+                padding: 3px;
+            }
+            
+            .column {
+                min-width: 90px;
+                gap: 3px;
+            }
+            
+            .column-header {
+                font-size: 0.75em;
+                padding: 3px 1px;
+            }
+            
+            .match-card {
+                padding: 3px;
+                gap: 1px;
+            }
+            
+            .team {
+                font-size: 0.55em;
+                padding: 1px 2px;
+            }
+            
+            .vs {
+                font-size: 0.4em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -385,6 +466,7 @@
     </script>
 </body>
 </html>
+
 
 
 
