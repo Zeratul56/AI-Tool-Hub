@@ -146,45 +146,77 @@
         
         .arrow-head { fill: var(--arrow-win); }
         .arrow-head-lose { fill: var(--arrow-lose); }
-@media (max-width: 900px) {
+@media screen and (max-width: 800px) {
             body {
-                padding: 5px;
+                padding: 0;
             }
 
             .bracket-wrapper {
-                gap: 15px;
-                padding: 10px;
+                gap: 8px;
+                padding: 5px;
             }
 
             .column {
-                min-width: 130px;
-                gap: 8px;
+                min-width: 100px;
+                gap: 4px;
             }
 
             .column-header {
-                font-size: 0.9em;
-                padding: 6px 2px;
-                margin-bottom: 8px;
+                font-size: 0.8em;
+                padding: 4px 1px;
+                margin-bottom: 4px;
             }
 
             .match-card {
-                padding: 6px;
-                gap: 3px;
+                padding: 4px;
+                gap: 2px;
             }
 
             .team {
-                font-size: 0.7em;
-                padding: 3px 4px;
+                font-size: 0.6em;
+                padding: 2px 3px;
             }
 
             .vs {
-                font-size: 0.5em;
-                margin: 1px 0;
+                font-size: 0.4em;
+                margin: 0;
             }
 
-            .spacer { height: 20px; }
-            .spacer-large { height: 40px; }
-            .spacer-huge { height: 140px; }
+            .pivot-hint {
+                font-size: 0.4em;
+                margin-top: 2px;
+            }
+
+            .spacer { height: 15px; }
+            .spacer-large { height: 30px; }
+            .spacer-huge { height: 100px; }
+            
+            /* Для телефонов в горизонтальном режиме */
+            @media screen and (orientation: landscape) {
+                .bracket-wrapper {
+                    gap: 6px;
+                }
+                
+                .column {
+                    min-width: 90px;
+                    gap: 3px;
+                }
+                
+                .column-header {
+                    font-size: 0.75em;
+                    padding: 3px 1px;
+                }
+                
+                .match-card {
+                    padding: 3px;
+                    gap: 1px;
+                }
+                
+                .team {
+                    font-size: 0.55em;
+                    padding: 1px 2px;
+                }
+            }
         }
     </style>
 </head>
@@ -425,6 +457,7 @@
     </script>
 </body>
 </html>
+
 
 
 
