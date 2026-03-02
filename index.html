@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swiss System - Aligned Bottom</title>
+    <title>Swiss Show Match</title>
     <style>
         :root {
             --bg-color: #121212;
@@ -146,7 +146,50 @@
         
         .arrow-head { fill: var(--arrow-win); }
         .arrow-head-lose { fill: var(--arrow-lose); }
+        @media (orientation: landscape) and (max-width: 1024px) {
+            body {
+                padding: 10px;
+            }
+            
+            .bracket-wrapper {
+                gap: 10px; /* Значительно меньше отступов */
+                padding: 10px;
+                width: 100%;
+            }
 
+            .column {
+                gap: 8px;
+                min-width: 120px; /* Колонки уже */
+            }
+
+            .column-header {
+                padding: 6px;
+                font-size: 0.9em;
+                margin-bottom: 5px;
+            }
+                        .match-card {
+                padding: 8px;
+                gap: 5px;
+            }
+
+            .team {
+                padding: 4px 6px;
+                font-size: 0.75em;
+            }
+
+            .vs {
+                font-size: 0.6em;
+            }
+
+            .pivot-hint {
+                font-size: 0.6em;
+                margin-top: 3px;
+            }
+
+            .spacer { height: 25px; }
+            .spacer-large { height: 50px; }
+            .spacer-huge { height: 150px; /* Чуть меньше отступ для низа */ }
+        }
     </style>
 </head>
 <body>
@@ -162,7 +205,7 @@
             <div class="match-card"><div class="team">Арсен</div><div class="vs">VS</div><div class="team winner">Ипоп</div></div>
             <div class="match-card"><div class="team winner">Вика</div><div class="vs">VS</div><div class="team">Алмаз</div></div>
             <div class="match-card"><div class="team">Саня</div><div class="vs">VS</div><div class="team">Андрей</div></div>
-            <div class="match-card"><div class="team">Леня</div><div class="vs">VS</div><div class="team">Семен</div></div>
+            <div class="match-card"><div class="team winner">Леня</div><div class="vs">VS</div><div class="team">Семен</div></div>
             <div class="match-card"><div class="team">Антон</div><div class="vs">VS</div><div class="team">Илья</div></div>
             <div class="match-card"><div class="team">Тарас</div><div class="vs">VS</div><div class="team">Курган</div></div>
         </div>
@@ -170,10 +213,10 @@
         <!-- COLUMN 2: 1:0 & 0:1 -->
         <div class="column" id="col-1">
             <div class="column-header" style="color: #4caf50;">1:0</div>
-            <div class="match-card"><div class="team">Шест</div><div class="vs">VS</div><div class="team">   </div></div>
-            <div class="match-card"><div class="team">Данил</div><div class="vs">VS</div><div class="team">   </div></div>
-            <div class="match-card"><div class="team">Ипоп</div><div class="vs">VS</div><div class="team">   </div></div>
-            <div class="match-card"><div class="team">Вика</div><div class="vs">VS</div><div class="team">   </div></div>
+            <div class="match-card"><div class="team">  </div><div class="vs">VS</div><div class="team">  </div></div>
+            <div class="match-card"><div class="team">  </div><div class="vs">VS</div><div class="team">   </div></div>
+            <div class="match-card"><div class="team">  </div><div class="vs">VS</div><div class="team">   </div></div>
+            <div class="match-card"><div class="team">  </div><div class="vs">VS</div><div class="team">   </div></div>
             
             <div class="spacer-large"></div>
 
@@ -386,6 +429,7 @@
     </script>
 </body>
 </html>
+
 
 
 
