@@ -146,14 +146,181 @@
         
         .arrow-head { fill: var(--arrow-win); }
         .arrow-head-lose { fill: var(--arrow-lose); }
-@media screen and (max-width: 800px) {
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Swiss System Mobile Scroll</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #ffffff;
+            --green-zone: #1b4d3e;
+            --red-zone: #4d1b1b;
+            --border-color: #333;
+            --arrow-win: #2ecc71;
+            --arrow-lose: #e74c3c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            
+            /* Включаем скролл */
+            overflow-x: auto;
+            overflow-y: hidden; /* Скроллим только по горизонтали */
+            
+            /* Плавность скролла */
+            scroll-behavior: smooth;
+            width: 100vw;
+        }
+
+        .bracket-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 5px; /* Небольшие отступы слева/справа */
+            position: relative;
+            width: max-content; /* Ширина по содержимому (сетке) */
+            
+            /* Убираем тени границ при скролле */
+            box-shadow: none;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 120px;
+            z-index: 2;
+        }
+
+        .column-header {
+            text-align: center;
+            font-weight: bold;
+            padding: 6px 2px;
+            border-radius: 4px;
+            margin-bottom: 6px;
+            font-size: 0.9em;
+            background: #2a2a2a;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            white-space: nowrap;
+        }
+
+        .header-green { background: var(--green-zone); color: #fff; border: 1px solid #2ecc71; }
+        .header-red { background: var(--red-zone); color: #fff; border: 1px solid #e74c3c; }
+        .header-center { background: #333; color: #ffd700; border: 1px solid #ffd700; }
+
+        .match-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            cursor: pointer;
+        }
+
+        .team {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 3px 4px;
+            background: #252525;
+            border-radius: 3px;
+            font-size: 0.7em;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .team.winner {
+            background: #2d5a27;
+            color: #fff;
+            border-left: 2px solid #4caf50;
+        }
+
+        .vs {
+            text-align: center;
+            font-size: 0.5em;
+            color: #666;
+            margin: 1px 0;
+        }
+
+        .zone-qualified {
+            background: rgba(27, 77, 62, 0.4);
+            border: 1px solid var(--green-zone);
+        }
+
+        .zone-eliminated {
+            background: rgba(77, 27, 27, 0.4);
+            border: 1px solid var(--red-zone);
+        }
+
+        .match-pivot {
+            border: 1px solid #ffd700;
+            background: #2a2a1a;
+        }
+
+        .pivot-hint {
+            font-size: 0.5em;
+            color: #ffd700;
+            text-align: center;
+            margin-top: 3px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Spacers */
+        .spacer { height: 20px; flex-shrink: 0; }
+        .spacer-large { height: 40px; flex-shrink: 0; }
+        .spacer-huge { height: 120px; flex-shrink: 0; }
+
+        /* SVG Layer */
+        .arrow-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: visible;
+        }
+
+        .arrow-path {
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            opacity: 0.8;
+        }
+        
+        .arrow-win { stroke: var(--arrow-win); }
+        .arrow-lose { stroke: var(--arrow-lose); }
+        
+        .arrow-head { fill: var(--arrow-win); }
+        .arrow-head-lose { fill: var(--arrow-lose); }
+
+        /* МОБИЛЬНАЯ АДАПТАЦИЯ - МАКСИМАЛЬНОЕ УМЕНЬШЕНИЕ */
+        @media screen and (max-width: 800px) {
             body {
                 padding: 0;
             }
 
             .bracket-wrapper {
                 gap: 8px;
-                padding: 5px;
+                padding: 5px 2px;
             }
 
             .column {
@@ -190,32 +357,41 @@
             .spacer { height: 15px; }
             .spacer-large { height: 30px; }
             .spacer-huge { height: 100px; }
+        }
+
+        /* Адаптация под горизонтальный экран */
+        @media screen and (orientation: landscape) and (max-height: 600px) {
+            body {
+                background-color: #0a0a0a;
+            }
             
-            /* Для телефонов в горизонтальном режиме */
-            @media screen and (orientation: landscape) {
-                .bracket-wrapper {
-                    gap: 6px;
-                }
-                
-                .column {
-                    min-width: 90px;
-                    gap: 3px;
-                }
-                
-                .column-header {
-                    font-size: 0.75em;
-                    padding: 3px 1px;
-                }
-                
-                .match-card {
-                    padding: 3px;
-                    gap: 1px;
-                }
-                
-                .team {
-                    font-size: 0.55em;
-                    padding: 1px 2px;
-                }
+            .bracket-wrapper {
+                gap: 6px;
+                padding: 3px;
+            }
+            
+            .column {
+                min-width: 90px;
+                gap: 3px;
+            }
+            
+            .column-header {
+                font-size: 0.75em;
+                padding: 3px 1px;
+            }
+            
+            .match-card {
+                padding: 3px;
+                gap: 1px;
+            }
+            
+            .team {
+                font-size: 0.55em;
+                padding: 1px 2px;
+            }
+            
+            .vs {
+                font-size: 0.4em;
             }
         }
     </style>
@@ -232,7 +408,7 @@
             <div class="match-card"><div class="team winner">Данил</div><div class="vs">VS</div><div class="team">Шишка</div></div>
             <div class="match-card"><div class="team">Арсен</div><div class="vs">VS</div><div class="team winner">Ипоп</div></div>
             <div class="match-card"><div class="team winner">Вика</div><div class="vs">VS</div><div class="team">Алмаз</div></div>
-            <div class="match-card"><div class="team">Саня</div><div class="vs">VS</div><div class="team winner">Андрей</div></div>
+            <div class="match-card"><div class="team">Саня loser</div><div class="vs">VS</div><div class="team winner">Андрей</div></div>
             <div class="match-card"><div class="team winner">Леня</div><div class="vs">VS</div><div class="team">Семен</div></div>
             <div class="match-card"><div class="team">Антон</div><div class="vs">VS</div><div class="team">Илья</div></div>
             <div class="match-card"><div class="team">Тарас</div><div class="vs">VS</div><div class="team">Курган</div></div>
@@ -457,6 +633,7 @@
     </script>
 </body>
 </html>
+
 
 
 
