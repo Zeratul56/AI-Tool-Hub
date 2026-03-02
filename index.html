@@ -1,302 +1,388 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="adaptive.css">
-    <title>Сборник всех полезных нейросетей</title>
+    <title>Swiss System - Aligned Bottom</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #ffffff;
+            --green-zone: #1b4d3e;
+            --red-zone: #4d1b1b;
+            --border-color: #333;
+            --arrow-win: #2ecc71;
+            --arrow-lose: #e74c3c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .bracket-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 50px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            min-width: 200px;
+            z-index: 2;
+        }
+
+        .column-header {
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            background: #2a2a2a;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .header-green { background: var(--green-zone); color: #fff; border: 1px solid #2ecc71; }
+        .header-red { background: var(--red-zone); color: #fff; border: 1px solid #e74c3c; }
+        .header-center { background: #333; color: #ffd700; border: 1px solid #ffd700; }
+
+        .match-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .team {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 6px 10px;
+            background: #252525;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .team.winner {
+            background: #2d5a27;
+            color: #fff;
+            border-left: 3px solid #4caf50;
+        }
+
+        .vs {
+            text-align: center;
+            font-size: 0.7em;
+            color: #666;
+            margin: 2px 0;
+        }
+
+        .zone-qualified {
+            background: rgba(27, 77, 62, 0.4);
+            border: 1px solid var(--green-zone);
+        }
+
+        .zone-eliminated {
+            background: rgba(77, 27, 27, 0.4);
+            border: 1px solid var(--red-zone);
+        }
+
+        .match-pivot {
+            border: 1px solid #ffd700;
+            background: #2a2a1a;
+        }
+
+        .pivot-hint {
+            font-size: 0.7em;
+            color: #ffd700;
+            text-align: center;
+            margin-top: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Spacers */
+        .spacer { height: 40px; flex-shrink: 0; }
+        .spacer-large { height: 80px; flex-shrink: 0; }
+        .spacer-huge { height: 250px; flex-shrink: 0; } /* Максимальный отступ для опускания 2:3 */
+
+        /* SVG Layer */
+        .arrow-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: visible;
+        }
+
+        .arrow-path {
+            fill: none;
+            stroke-width: 3;
+            stroke-linecap: round;
+            opacity: 0.8;
+        }
+        
+        .arrow-win { stroke: var(--arrow-win); }
+        .arrow-lose { stroke: var(--arrow-lose); }
+        
+        .arrow-head { fill: var(--arrow-win); }
+        .arrow-head-lose { fill: var(--arrow-lose); }
+
+    </style>
 </head>
 <body>
-  <div class="background-shapes">
-    <div class="shape shape1"></div>
-    <div class="shape shape2"></div>
-    <div class="shape shape3"></div>
-  </div>
-  <header id="header">
-    <div class="header-container">
-      <!-- Логотип -->
-      <div class="logo">
-        <a href="#head">AI Tools Hub</a>
-      </div>
-  
-      <!-- Навигация -->
-      <nav class="nav-menu">
-        <ul>
-          <li><a href="#head">Главная</a></li>
-          <li><a href="#tools">Нейросети</a></li>
-          <li><a href="#prompts">Памятка по промптам</a></li>
-        </ul>
-      </nav>
-  
-      <!-- Бургер-меню для мобильных -->
-      <div class="burger-menu">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-      </div>
-    </div>
-  </header>
-    <div class="hero_section" id="head">
-        <div class="section_row">
-            <h1>Ваш гид по искусственному интеллекту</h1>
-            <h2>Собраны лучшие нейросети для создания контента, видео, презентаций и много другого</h2> 
+
+    <div class="bracket-wrapper" id="bracket">
+        <!-- SVG Layer -->
+
+        <!-- COLUMN 1: 0:0 -->
+        <div class="column" id="col-0">
+            <div class="column-header">0:0</div>
+            <div class="match-card"><div class="team winner">Шест</div><div class="vs">VS</div><div class="team">Женя</div></div>
+            <div class="match-card"><div class="team winner">Данил</div><div class="vs">VS</div><div class="team">Шишка</div></div>
+            <div class="match-card"><div class="team">Арсен</div><div class="vs">VS</div><div class="team winner">Ипоп</div></div>
+            <div class="match-card"><div class="team">Вика</div><div class="vs">VS</div><div class="team">Алмаз</div></div>
+            <div class="match-card"><div class="team">Саня</div><div class="vs">VS</div><div class="team">Андрей</div></div>
+            <div class="match-card"><div class="team">Леня</div><div class="vs">VS</div><div class="team">Семен</div></div>
+            <div class="match-card"><div class="team">Антон</div><div class="vs">VS</div><div class="team">Илья</div></div>
+            <div class="match-card"><div class="team">Тарас</div><div class="vs">VS</div><div class="team">Курган</div></div>
         </div>
-      
-    </div>
 
-      <section id="tools" class="">
-        <div class="row"> <h1>Популярные нейросети</h1>  </div>
-
-        <div class="filters">
-            <input type="text" id="search" placeholder="Поиск нейросетей..." />
-            <div class="filters-group-row">
-              <div class="filter-group">
-                <h4>Категории:</h4>
-                <label><input type="radio" name="category" class="filter-radio" data-filter="all" checked> Все</label>
-                <label><input type="radio" name="category" class="filter-radio" data-filter="text"> Для текста</label>
-                <label><input type="radio" name="category" class="filter-radio" data-filter="image"> Для изображений</label>
-                <label><input type="radio" name="category" class="filter-radio" data-filter="video"> Для видео</label>
-                <label><input type="radio" name="category" class="filter-radio" data-filter="present"> Для презентаций</label>
-                <label><input type="radio" name="category" class="filter-radio" data-filter="sundry"> Разное</label>
-              </div>
-          
-              <div class="filter-group">
-                <h4>Цена:</h4>
-                <label><input type="radio" name="price" class="filter-radio" data-filter="all" checked> Все</label>
-                <label><input type="radio" name="price" class="filter-radio" data-filter="free"> Бесплатные</label>
-                <label><input type="radio" name="price" class="filter-radio" data-filter="paid"> Платные</label>
-              </div>
-
-              <div class="filter-group">
-                <h4>По доступности:</h4>
-                <label><input type="radio" name="availabe" class="filter-radio" data-filter="all" checked>Вcе</label>
-                <label><input type="radio" name="availabe" class="filter-radio" data-filter="avail"> Доступные в России</label>
-                <label><input type="radio" name="availabe" class="filter-radio" data-filter="not_avail"> Недоступные в России</label>
-              </div>
-
-            </div>
+        <!-- COLUMN 2: 1:0 & 0:1 -->
+        <div class="column" id="col-1">
+            <div class="column-header" style="color: #4caf50;">1:0</div>
+            <div class="match-card"><div class="team">Шест</div><div class="vs">VS</div><div class="team">   </div></div>
+            <div class="match-card"><div class="team">Данил</div><div class="vs">VS</div><div class="team">   </div></div>
+            <div class="match-card"><div class="team">Ипоп</div><div class="vs">VS</div><div class="team">   </div></div>
+            <div class="match-card"><div class="team">  </div><div class="vs">VS</div><div class="team">   </div></div>
             
-            <button id="reset-filters" class="reset-button">Сбросить фильтры</button>
-          </div>
-        
-        <div class="carousel">
-          <button class="carousel-button prev">←</button>
-          <div class="carousel-container">
-            <div class="card" data-category="text free not_avail">
-              <h3>ChatGPT</h3>
-              <p>Генерация текстов, ответы на вопросы.</p>
-              <span class="tag">Бесплатно</span>
-              <span class="tag">Текст</span> 
-              <span class="tag">Не доступен в России</span> 
-              <a href="https://chat.openai.com" target="_blank" class="button">Перейти →</a>
-            </div>
-            <div class="card" data-category="image paid not_avail" >
-              <h3>DALL·E</h3>
-              <p>Создание изображений по текстовым запросам.</p>
-              <span class="tag">Платно</span>
-              <span class="tag">Изображения</span>
-              <span class="tag">Не доступен в России</span> 
-              <a href="https://labs.openai.com/dall-e" target="_blank" class="button">Перейти →</a>
-            </div>
-            <div class="card" data-category="image paid avail">
-              <h3>MidJourney</h3>
-              <p>Генерация уникальных изображений.</p>
-              <span class="tag">Платно</span>
-              <span class="tag">Изображения</span>
-              <a href="https://www.midjourney.com" target="_blank" class="button">Перейти →</a>
-            </div>
-            <div class="card" data-category="text free avail" >
-                <h3>Qwen AI</h3>
-                <p>Генерация текстов, ответы на вопросы.</p>
-                <span class="tag">Бесплатно</span>
-                <span class="tag">Текст</span>
-                <a href="https://chat.qwen.ai/" target="_blank" class="button">Перейти →</a>
-            </div>
-            <div class="card" data-category="text free avail" >
-                <h3>DeepSeek</h3>
-                <p>Генерация текстов, ответы на вопросы.</p>
-                <span class="tag">Бесплатно</span>
-                <span class="tag">Текст</span>
-                <a href="https://www.deepseek.com/" target="_blank" class="button">Перейти →</a>
-            </div>
-            <div class="card" data-category="video paid not_avail" >
-                <h3>Runway</h3>
-                <p>Генерация видео по текстовому запросу.</p>
-                <span class="tag">Платно</span>
-                <span class="tag">Видео</span>
-                <span class="tag">Не доступно в России</span>
-                <a href="https://app.runwayml.com/" target="_blank" class="button">Перейти →</a>
-            </div>
-            <div class="card" data-category="video paid avail" >
-                <h3>Pika</h3>
-                <p>Генерация видео по текстовому запросу или текстовому запросу и картинке.</p>
-                <span class="tag">Платно</span>
-                <span class="tag">Видео</span>
-                <a href="https://pika.art/" target="_blank" class="button">Перейти →</a>
-            </div>
-            <div class="card" data-category="sundry paid avail" >
-                <h3>Tome</h3>
-                <p>Помощник для продаж.</p>
-                <span class="tag">Платно</span>
-                <span class="tag">Разное</span>
-                <a href="https://tome.app/" target="_blank" class="button">Перейти →</a>
-            </div>
-            <div class="card" data-category="present paid avail" >
-                <h3>Gamma</h3>
-                <p>Генерация презентаций по выбранной теме.</p>
-                <span class="tag">Платно</span>
-                <span class="tag">Презентации</span>
-                <a href="https://gamma.app/" target="_blank" class="button">Перейти →</a>
-            </div>
-            <div class="card" data-category="present image paid not_avail" >
-                <h3>Prezo</h3>
-                <p>Превращение документа в презентацию с сгенерированными картинками.</p>
-                <span class="tag">Платно</span>
-                <span class="tag">Презентации</span>
-                <span class="tag">Изображения</span>
-                <span class="tag">Не доступен в России</span>
-                <a href="https://prezo.ai/" target="_blank" class="button">Перейти →</a>
-            </div>
-            <div class="card" data-category="present paid avail" >
-                <h3>Slidebean </h3>
-                <p>Редизайн презентации.</p>
-                <span class="tag">Платно</span>
-                <span class="tag">Презентации</span>
-                <a href="https://slidebean.com/" target="_blank" class="button">Перейти →</a>
-            </div>
-            <div class="card" data-category="present free avail" >
-                <h3>Slidesgo</h3>
-                <p>Генерация простых презентаций.</p>
-                <span class="tag">Бесплатно</span>
-                <span class="tag">Презентации</span>
-                <a href="https://slidesgo.com/" target="_blank" class="button">Перейти →</a>
-            </div>
-            <div class="card" data-category="video paid avail" >
-                <h3>Hailuo AI</h3>
-                <p>Генерация видео по текстовому запросу, по персонажу или по картинке и текстовому запросу</p>
-                <span class="tag">Платно</span>
-                <span class="tag">Видео</span>
-                <a href="https://hailuoai.video/" target="_blank" class="button">Перейти →</a>
-            </div>
-            <div class="card" data-category="video paid avail" >
-                <h3>Genmo</h3>
-                <p>Генерация видео по текстовому запросу</p>
-                <span class="tag">Платно</span>
-                <span class="tag">Видео</span>
-                <a href="https://www.genmo.ai/" target="_blank" class="button">Перейти →</a>
-            </div>
-            <div class="card" data-category="text paid avail" >
-                <h3>Gerwin</h3>
-                <p>Генерация текста, с выбором тона повествования</p>
-                <span class="tag">Платно</span>
-                <span class="tag">Текст</span>
-                <a href="https://app.gerwin.io/" target="_blank" class="button">Перейти →</a>
-            </div>
-            <div class="card" data-category="text free avail" >
-                <h3>YandexGPT</h3>
-                <p>Мощная генерация текста</p>
-                <span class="tag">Бесплатно</span>
-                <span class="tag">Текст</span>
-                <a href="https://ya.ru/neuro-search" target="_blank" class="button">Перейти →</a>
-            </div>
-            <div class="card" data-category="text image free avail" >
-                <h3>GigaChat</h3>
-                <p>Мощная генерация текста и изображений</p>
-                <span class="tag">Бесплатно</span>
-                <span class="tag">Текст</span>
-                <span class="tag">Изображения</span>
-                <a href="https://giga.chat" target="_blank" class="button">Перейти →</a>
-            </div>
-            <div class="card" data-category="text image paid avail" >
-                <h3>Pytr</h3>
-                <p>Мощная генерация текста и изображений</p>
-                <span class="tag">Платно</span>
-                <span class="tag">Текст</span>
-                <span class="tag">Изображения</span>
-                <a href="https://rytr.me/" target="_blank" class="button">Перейти →</a>
+            <div class="spacer-large"></div>
 
-            </div>
-          </div>
-          <div class="no-results-message" id="no-results">
-            <p>По вашему запросу ничего не найдено. Попробуйте изменить ключевые слова.</p>
-          </div>
-          <button class="carousel-button next">→</button>
+            <div class="column-header" style="color: #e74c3c;">0:1</div>
+            <div class="match-card"><div class="team">   </div><div class="vs">VS</div><div class="team">   </div></div>
+            <div class="match-card"><div class="team">    </div><div class="vs">VS</div><div class="team">   </div></div>
+            <div class="match-card"><div class="team">   </div><div class="vs">VS</div><div class="team">   </div></div>
+            <div class="match-card"><div class="team">   </div><div class="vs">VS</div><div class="team">   </div></div>
         </div>
-      </section>
 
+        <!-- COLUMN 3: 2:0, 1:1, 0:2 -->
+        <div class="column" id="col-2">
+            <div class="column-header">2:0</div>
+            <div class="match-card"><div class="team">     </div><div class="vs">VS</div><div class="team">   </div></div>
+            <div class="match-card"><div class="team">    </div><div class="vs">VS</div><div class="team">    </div></div>
 
-      <section id="prompts" class="section">
-        <div class="row"><h1>Как правильно составлять промпты?</h1></div>
-      
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-content">
-              <h3>Шаг 1: Что такое промпт?</h3>
-              <p>Промпт — это запрос, который вы отправляете нейросети. От того, насколько точно вы его формулируете, зависит качество результата.</p>
-              <p><strong>Пример:</strong> "Нарисуй футуристический город в стиле киберпанк."</p>
-            </div>
-          </div>
-      
-          <div class="timeline-item">
-            <div class="timeline-content">
-              <h3>Шаг 2: Основные правила</h3>
-              <ul>
-                <li>Будьте конкретны: укажите стиль, формат, аудиторию.</li>
-                <li>Используйте примеры: "Создай текст в стиле Марка Твена".</li>
-                <li>Экспериментируйте: пробуйте разные формулировки.</li>
-              </ul>
-            </div>
-          </div>
-      
-          <div class="timeline-item">
-            <div class="timeline-content">
-              <h3>Шаг 3: Примеры промптов</h3>
-              <div class="example-grid">
-                <div class="example-card">
-                  <h4>Для текста</h4>
-                  <p>"Напиши статью из 5 абзацев о пользе медитации."</p>
-                </div>
-                <div class="example-card">
-                  <h4>Для изображений</h4>
-                  <p>"Нарисуй волшебный лес с яркими цветами и светящимися грибами."</p>
-                </div>
-                <div class="example-card">
-                  <h4>Для кода</h4>
-                  <p>"Напиши скрипт на Python для анализа данных в CSV-файле."</p>
-                </div>
-              </div>
-            </div>
-          </div>
-    
+            <div class="spacer"></div>
+
+            <div class="column-header">1:1</div>
+            <div class="match-card"><div class="team">  </div><div class="vs">VS</div><div class="team">     </div></div>
+            <div class="match-card"><div class="team">  </div><div class="vs">VS</div><div class="team">  </div></div>
+            <div class="match-card"><div class="team">  </div><div class="vs">VS</div><div class="team">  </div></div>
+            <div class="match-card"><div class="team">  </div><div class="vs">VS</div><div class="team">  </div></div>
+
+            <div class="spacer"></div>
+
+            <div class="column-header">0:2</div>
+            <div class="match-card"><div class="team">  </div><div class="vs">VS</div><div class="team">  </div></div>
+            <div class="match-card"><div class="team">  </div><div class="vs">VS</div><div class="team">  </div></div>
         </div>
-      </section>
 
-      <footer class="footer section" >
-        <div class="footer-container">
-          <!-- Блок с логотипом и описанием -->
-          <div class="footer-section">
-            <h3>AI Tools Hub</h3>
-            <p>Ваш гид по искусственному интеллекту. Здесь вы найдете лучшие нейросети для работы с контентом.</p>
-          </div>
-      
-          <!-- Блок с навигацией -->
-          <div class="footer-section">
-            <h4>Навигация</h4>
-            <ul>
-              <li><a href="#header">Главная</a></li>
-              <li><a href="#tools">Нейросети</a></li>
-              <li><a href="#prompts">Памятка по промптам</a></li>
-            </ul>
-          </div>
+        <!-- COLUMN 4: 3:0, 2:1, 1:2, 0:3 -->
+        <div class="column" id="col-3">
+            <div class="column-header header-green">3:0</div>
+            <div class="match-card zone-qualified"><div class="team winner">  </div><div class="vs"></div><div class="team">   </div></div>
+
+            <div class="spacer"></div>
+
+            <div class="column-header">2:1</div>
+            <div class="match-card"><div class="team">   </div><div class="vs">VS</div><div class="team">   </div></div>
+            <div class="match-card"><div class="team">  </div><div class="vs">VS</div><div class="team">   </div></div>
+
+            <div class="spacer"></div>
+
+            <div class="column-header">1:2</div>
+            <div class="match-card"><div class="team">   </div><div class="vs">VS</div><div class="team">    </div></div>
+            <div class="match-card"><div class="team">    </div><div class="vs">VS</div><div class="team">   </div></div>
+
+            <div class="spacer"></div>
+
+            <div class="column-header header-red">0:3</div>
+            <div class="match-card zone-eliminated"><div class="team">   </div><div class="vs"></div><div class="team">    </div></div>
         </div>
-      </footer>
-      <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-      <script src="main.js"></script>
+
+        <!-- COLUMN 5: 3:1, 2:2, 1:3 -->
+        <div class="column" id="col-4">
+            <div class="column-header header-green">3:1</div>
+            <div class="match-card zone-qualified"><div class="team winner">    </div><div class="vs"></div><div class="team">  </div></div>
+            <div class="match-card zone-qualified"><div class="team winner">    </div><div class="vs"></div><div class="team">    </div></div>
+
+            <div class="spacer-large"></div>
+
+            <div class="column-header header-center">2:2</div>
+            <div class="match-card match-pivot">
+                <div class="team"> </div>
+                <div class="vs">VS</div>
+                <div class="team"> </div>
+                <div class="pivot-hint">
+                    <span>Win ➚ 3:2</span>
+                    <span>Lose ➘ 2:3</span>
+                </div>
+            </div>
+            <div class="match-card match-pivot">
+                <div class="team"> </div>
+                <div class="vs">VS</div>
+                <div class="team"> </div>
+                <div class="pivot-hint">
+                    <span>Win ➚ 3:2</span>
+                    <span>Lose ➘ 2:3</span>
+                </div>
+            </div>
+
+            <div class="spacer-large"></div>
+
+            <div class="column-header header-red">1:3</div>
+            <div class="match-card zone-eliminated"><div class="team">  </div><div class="vs"></div><div class="team">  </div></div>
+            <div class="match-card zone-eliminated"><div class="team">  </div><div class="vs"></div><div class="team">  </div></div>
+        </div>
+
+        <!-- COLUMN 6: 3:2, 2:3 -->
+        <div class="column" id="col-5">
+            <div class="column-header header-green">3:2</div>
+            <div class="match-card zone-qualified"><div class="team winner">  </div><div class="vs"></div><div class="team">  </div></div>
+            <div class="match-card zone-qualified"><div class="team winner">  </div><div class="vs"></div><div class="team">  </div></div>
+
+            <!-- ОГРОМНЫЙ ОТСТУП ЧТОБЫ ОПУСТИТЬ 2:3 ВНИЗ -->
+            <div class="spacer-huge"></div>
+
+            <div class="column-header header-red">2:3</div>
+            <div class="match-card zone-eliminated"><div class="team">  </div><div class="vs"></div><div class="team">  </div></div>
+            <div class="match-card zone-eliminated"><div class="team">  </div><div class="vs"></div><div class="team">  </div></div>
+        </div>
+    </div>
+
+    <script>
+        // Конфигурация стрелок (проценты высоты колонки)
+        const flows = [
+            // 0:0 -> 1:0 (Win) & 0:1 (Lose)
+            { from: 0, to: 1, type: 'win', fromY: 25, toY: 25 },
+            { from: 0, to: 1, type: 'lose', fromY: 75, toY: 75 },
+
+            // 1:0 -> 2:0 (Win) & 1:1 (Lose)
+            { from: 1, to: 2, type: 'win', fromY: 15, toY: 15 },
+            { from: 1, to: 2, type: 'lose', fromY: 35, toY: 45 },
+
+            // 0:1 -> 1:1 (Win) & 0:2 (Lose)
+            { from: 1, to: 2, type: 'win', fromY: 65, toY: 55 },
+            { from: 1, to: 2, type: 'lose', fromY: 85, toY: 85 },
+
+            // 2:0 -> 3:0 (Win) & 2:1 (Lose)
+            { from: 2, to: 3, type: 'win', fromY: 15, toY: 15 },
+            { from: 2, to: 3, type: 'lose', fromY: 25, toY: 35 },
+
+            // 1:1 -> 2:1 (Win) & 1:2 (Lose)
+            { from: 2, to: 3, type: 'win', fromY: 45, toY: 45 },
+            { from: 2, to: 3, type: 'lose', fromY: 55, toY: 65 },
+
+            // 0:2 -> 1:2 (Win) & 0:3 (Lose)
+            { from: 2, to: 3, type: 'win', fromY: 75, toY: 55 },
+            { from: 2, to: 3, type: 'lose', fromY: 85, toY: 85 },
+
+            // 2:1 -> 3:1 (Win) & 2:2 (Lose)
+            { from: 3, to: 4, type: 'win', fromY: 35, toY: 15 },
+            { from: 3, to: 4, type: 'lose', fromY: 45, toY: 65 },
+
+            // 1:2 -> 2:2 (Win) & 1:3 (Lose)
+            { from: 3, to: 4, type: 'win', fromY: 65, toY: 65 },
+            { from: 3, to: 4, type: 'lose', fromY: 65, toY: 85 },
+
+            // 2:2 -> 3:2 (Win) & 2:3 (Lose)
+            // fromY 65/75 это блок 2:2 в колонке 4
+            // toY 15 это верх колонки 5 (3:2)
+            // toY 95 это самый низ колонки 5 (2:3), чтобы попасть в центр блока 2:3
+            { from: 4, to: 5, type: 'win', fromY: 65, toY: 15 },
+            { from: 4, to: 5, type: 'lose', fromY: 75, toY: 95 },
+        ];
+
+        function drawSimpleArrows() {
+            const wrapper = document.getElementById('bracket');
+            let svg = wrapper.querySelector('.arrow-layer');
+            
+            if (!svg) {
+                svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svg.classList.add('arrow-layer');
+                wrapper.appendChild(svg);
+            }
+
+            const update = () => {
+                svg.setAttribute('width', wrapper.offsetWidth);
+                svg.setAttribute('height', wrapper.offsetHeight);
+                while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+                const cols = wrapper.querySelectorAll('.column');
+                
+                flows.forEach(flow => {
+                    const colFrom = cols[flow.from];
+                    const colTo = cols[flow.to];
+                    
+                    if (!colFrom || !colTo) return;
+
+                    const rectFrom = colFrom.getBoundingClientRect();
+                    const rectTo = colTo.getBoundingClientRect();
+                    const wrapRect = wrapper.getBoundingClientRect();
+
+                    const x1 = rectFrom.right - wrapRect.left;
+                    const y1 = rectFrom.top + (rectFrom.height * (flow.fromY / 100)) - wrapRect.top;
+                    
+                    const x2 = rectTo.left - wrapRect.left;
+                    const y2 = rectTo.top + (rectTo.height * (flow.toY / 100)) - wrapRect.top;
+
+                    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    const midX = (x1 + x2) / 2;
+                    const d = `M ${x1} ${y1} Q ${midX} ${y1} ${x2} ${y2}`;
+                    
+                    path.setAttribute('d', d);
+                    path.classList.add('arrow-path');
+                    path.classList.add(flow.type === 'win' ? 'arrow-win' : 'arrow-lose');
+                    svg.appendChild(path);
+
+                    const angle = Math.atan2(y2 - y1, x2 - x1);
+                    const headLen = 10;
+                    const arrowHead = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+                    
+                    const x3 = x2 - headLen * Math.cos(angle - Math.PI / 6);
+                    const y3 = y2 - headLen * Math.sin(angle - Math.PI / 6);
+                    const x4 = x2 - headLen * Math.cos(angle + Math.PI / 6);
+                    const y4 = y2 - headLen * Math.sin(angle + Math.PI / 6);
+                    
+                    arrowHead.setAttribute('points', `${x2},${y2} ${x3},${y3} ${x4},${y4}`);
+                    arrowHead.classList.add(flow.type === 'win' ? 'arrow-head' : 'arrow-head-lose');
+                    svg.appendChild(arrowHead);
+                });
+            };
+
+            update();
+            window.addEventListener('resize', update);
+        }
+
+        window.addEventListener('load', drawSimpleArrows);
+    </script>
 </body>
 </html>
