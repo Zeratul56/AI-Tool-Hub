@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Swiss Show Match</title>
     <style>
         :root {
@@ -21,50 +21,37 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
-            padding: 0;
+            padding: 40px;
             display: flex;
             justify-content: center;
             min-height: 100vh;
-            
-            /* Включаем скролл */
-            overflow-x: auto;
-            overflow-y: hidden; /* Скроллим только по горизонтали */
-            
-            /* Плавность скролла */
-            scroll-behavior: smooth;
-            width: 100vw;
         }
 
         .bracket-wrapper {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
-            padding: 10px 5px; /* Небольшие отступы слева/справа */
+            gap: 50px;
+            padding: 20px;
             position: relative;
-            width: max-content; /* Ширина по содержимому (сетке) */
-            
-            /* Убираем тени границ при скролле */
-            box-shadow: none;
         }
 
         .column {
             display: flex;
             flex-direction: column;
-            gap: 6px;
-            min-width: 120px;
+            gap: 15px;
+            min-width: 200px;
             z-index: 2;
         }
 
         .column-header {
             text-align: center;
             font-weight: bold;
-            padding: 6px 2px;
+            padding: 10px;
             border-radius: 4px;
-            margin-bottom: 6px;
-            font-size: 0.9em;
+            margin-bottom: 10px;
+            font-size: 1.1em;
             background: #2a2a2a;
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            white-space: nowrap;
         }
 
         .header-green { background: var(--green-zone); color: #fff; border: 1px solid #2ecc71; }
@@ -74,40 +61,36 @@
         .match-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 5px;
-            padding: 5px;
+            border-radius: 6px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: 3px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
-            cursor: pointer;
+            gap: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .team {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            padding: 3px 4px;
+            padding: 6px 10px;
             background: #252525;
-            border-radius: 3px;
-            font-size: 0.7em;
+            border-radius: 4px;
+            font-size: 0.9em;
             font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .team.winner {
             background: #2d5a27;
             color: #fff;
-            border-left: 2px solid #4caf50;
+            border-left: 3px solid #4caf50;
         }
 
         .vs {
             text-align: center;
-            font-size: 0.5em;
+            font-size: 0.7em;
             color: #666;
-            margin: 1px 0;
+            margin: 2px 0;
         }
 
         .zone-qualified {
@@ -126,18 +109,18 @@
         }
 
         .pivot-hint {
-            font-size: 0.5em;
+            font-size: 0.7em;
             color: #ffd700;
             text-align: center;
-            margin-top: 3px;
+            margin-top: 5px;
             display: flex;
             justify-content: space-between;
         }
 
         /* Spacers */
-        .spacer { height: 20px; flex-shrink: 0; }
-        .spacer-large { height: 40px; flex-shrink: 0; }
-        .spacer-huge { height: 120px; flex-shrink: 0; }
+        .spacer { height: 40px; flex-shrink: 0; }
+        .spacer-large { height: 80px; flex-shrink: 0; }
+        .spacer-huge { height: 250px; flex-shrink: 0; } /* Максимальный отступ для опускания 2:3 */
 
         /* SVG Layer */
         .arrow-layer {
@@ -153,7 +136,7 @@
 
         .arrow-path {
             fill: none;
-            stroke-width: 1.5;
+            stroke-width: 3;
             stroke-linecap: round;
             opacity: 0.8;
         }
@@ -163,89 +146,6 @@
         
         .arrow-head { fill: var(--arrow-win); }
         .arrow-head-lose { fill: var(--arrow-lose); }
-
-        /* МОБИЛЬНАЯ АДАПТАЦИЯ - МАКСИМАЛЬНОЕ УМЕНЬШЕНИЕ */
-        @media screen and (max-width: 800px) {
-            body {
-                padding: 0;
-            }
-
-            .bracket-wrapper {
-                gap: 8px;
-                padding: 5px 2px;
-            }
-
-            .column {
-                min-width: 100px;
-                gap: 4px;
-            }
-
-            .column-header {
-                font-size: 0.8em;
-                padding: 4px 1px;
-                margin-bottom: 4px;
-            }
-
-            .match-card {
-                padding: 4px;
-                gap: 2px;
-            }
-
-            .team {
-                font-size: 0.6em;
-                padding: 2px 3px;
-            }
-
-            .vs {
-                font-size: 0.4em;
-                margin: 0;
-            }
-
-            .pivot-hint {
-                font-size: 0.4em;
-                margin-top: 2px;
-            }
-
-            .spacer { height: 15px; }
-            .spacer-large { height: 30px; }
-            .spacer-huge { height: 100px; }
-        }
-
-        /* Адаптация под горизонтальный экран */
-        @media screen and (orientation: landscape) and (max-height: 600px) {
-            body {
-                background-color: #0a0a0a;
-            }
-            
-            .bracket-wrapper {
-                gap: 6px;
-                padding: 3px;
-            }
-            
-            .column {
-                min-width: 90px;
-                gap: 3px;
-            }
-            
-            .column-header {
-                font-size: 0.75em;
-                padding: 3px 1px;
-            }
-            
-            .match-card {
-                padding: 3px;
-                gap: 1px;
-            }
-            
-            .team {
-                font-size: 0.55em;
-                padding: 1px 2px;
-            }
-            
-            .vs {
-                font-size: 0.4em;
-            }
-        }
     </style>
 </head>
 <body>
@@ -485,6 +385,7 @@
     </script>
 </body>
 </html>
+
 
 
 
